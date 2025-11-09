@@ -42,7 +42,6 @@ async def main(
     _i18n_factory: Callable[[], TranslatorHub] = i18n_factory,
 ) -> None:
     logger = structlog.get_logger(__name__)
-
     nc = await nats.connect(nats_address)
     js = nc.jetstream()
     await logger.debug('NATS connection established')

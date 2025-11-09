@@ -27,6 +27,7 @@ class TranslatorRunnerMiddleware(BaseMiddleware):
         translator_hub: Optional[TranslatorHub] = ctx_data.get(self.translator_hub_alias)
         if from_user is None or translator_hub is None:
             return await event_handler(event, ctx_data)
+
         lang = from_user.language_code
         ctx_data[self.translator_runner_alias] = translator_hub.get_translator_by_locale(lang)
         await event_handler(event, ctx_data)

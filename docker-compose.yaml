@@ -10,6 +10,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - ./:/app
     command: ["poetry", "run", "python", "app.py"]
     depends_on:
       - worker

@@ -11,6 +11,7 @@ get_user_router = Router()
 
 @get_user_router.message(Command("get_info"))
 async def get_user_handler(msg: Message, i18n: TranslatorRunner, db: AsyncSession):
+    print("get_info")
     if msg.from_user == None:
         return
     user = await db.get(User, msg.from_user.id)

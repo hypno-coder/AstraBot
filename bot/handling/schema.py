@@ -4,7 +4,7 @@ import structlog
 from aiogram import Dispatcher
 from aiogram_dialog import setup_dialogs, StartMode
 
-from bot.handling import dialogs
+from bot.handling.dialogs import main_dialog
 from bot.handling.filters import ChatType, ChatTypeFilter
 from bot.handling.handlers import start_router
 from bot.handling.handlers import get_user_router
@@ -15,7 +15,7 @@ from bot.handling.middlewares import (
     DatabaseMiddleware,
 )
 from bot.handling.middlewares.logging import LoggingMiddleware
-from bot.handling.states import Watermark
+from bot.handling.states import Watermark, Main_menu
 
 logger = structlog.getLogger('schema')
 
@@ -31,7 +31,8 @@ async def assemble(
     dp.callback_query.middleware(t)
     db = DatabaseMiddleware('_db_session_maker')
     dp.message.middleware(db)
-    dp.update.middleware(DialogResetMiddleware(init_state=Watermark.enter_text, mode=StartMode.RESET_STACK))
+    dp.update.middleware(DialogResetMiddleware(init_state=Main_menu.start, mode=StartMode.RESET_STACK))
     dp.update.filter(ChatTypeFilter(ChatType.private))
-    dp.include_routers(dialogs.watermark, start_router, get_user_router)
+    dp.include_router(main_dialog)
+    dp.include_router(start_router)
     return dp

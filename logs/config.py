@@ -13,7 +13,7 @@ class Levels(int, enum.Enum):  # noqa: WPS600
 
 
 class StringLevels(str, enum.Enum):  # noqa: WPS600
-    critical = 'CRITICAL'
+    critical='CRITICAL'
     fatal = 'FATAL'
     error = 'ERROR'
     warning = 'WARNING'
