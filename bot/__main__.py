@@ -55,6 +55,7 @@ async def main(
     
     bot_representation = await bot.me()
     await logger.info(f'Bot {bot_representation.first_name} is ready to serve requests')
+    await bot.delete_webhook(drop_pending_updates=True)
     try:
         await asyncio.gather(dp.start_polling(
                                 bot,

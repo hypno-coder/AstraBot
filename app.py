@@ -1,7 +1,5 @@
 import asyncio
-import logging
 
-import nats
 import structlog
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 
@@ -15,9 +13,9 @@ async def main() -> None:  # noqa: WPS217
     logger = structlog.get_logger(__name__)
     await logger.info('App is starting, configs parsed successfully')
 
-    engine = create_async_engine(config.db.uri, **config.db.orm.engine.dict())
+    engine = create_async_engine(config.db.uri, **config.db.orm.engine.model_dump())
     session_maker = async_sessionmaker(
-        engine, **config.db.orm.session.dict(), class_=AsyncSession
+        engine, **config.db.orm.session.model_dump(), class_=AsyncSession
     )
 
     try:

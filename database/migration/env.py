@@ -53,7 +53,7 @@ def run_migrations_offline() -> None:
         envvar_prefix='APP_CONF',
         settings_files=['settings.toml', '.secrets.toml'],
     )
-    app_config: Config = Config.parse_obj(settings)
+    app_config: Config = Config.model_validate(settings)
     # url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=app_config.db.uri,
