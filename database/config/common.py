@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import Extra, SecretStr
+from pydantic import SecretStr
 
 from database.config import BaseDBConfig
 from database.config.orm.mixin import ORMConfig
@@ -29,4 +29,4 @@ class Config(BaseDBConfig):
         return f'{db_type}{adapter}://{username}:{password}@{host}/{db_name}'  # noqa: WPS221
 
     class Config:
-        extra = Extra.allow
+        extra = 'allow'
