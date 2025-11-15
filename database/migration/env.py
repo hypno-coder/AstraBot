@@ -1,4 +1,5 @@
 import asyncio
+import os
 from logging.config import fileConfig
 
 from alembic import context
@@ -49,12 +50,12 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    settings = Dynaconf(
-        envvar_prefix='APP_CONF',
-        settings_files=['settings.toml', '.secrets.toml'],
-    )
-    app_config: Config = Config.parse_obj(settings)
-    # url = config.get_main_option("sqlalchemy.url")
+    files_env = os.getenv("APP_CONF_SETTINGS_FILES")
+    settings_files = [p.strip() for p in files_env.split(",")] if files_env else ["settings.toml", ".secrets.toml"]
+    settings = Dynaconf(envvar_prefix="APP_CONF", settings_files=settings_files)
+    sd = settings.as_dict()
+    app_config: Config = Config.model_validate(sd.get("db") or sd)
+
     context.configure(
         url=app_config.db.uri,
         target_metadata=target_metadata,
@@ -84,16 +85,15 @@ async def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    settings = Dynaconf(
-        envvar_prefix='APP_CONF',
-        settings_files=[
-            'ROOT DIR OF PROJECT/settings.toml',
-            'ROOT DIR OF PROJECT/.secrets.toml',
-        ],
-    )
-    app_config: Config = Config.parse_obj(settings)
+
+    files_env = os.getenv("APP_CONF_SETTINGS_FILES")
+    settings_files = [p.strip() for p in files_env.split(",")] if files_env else ["settings.toml", ".secrets.toml"]
+    settings = Dynaconf(envvar_prefix="APP_CONF", settings_files=settings_files)
+    sd = settings.as_dict()
+    app_config: Config = Config.model_validate(sd.get("db") or sd)
+
     connectable = create_async_engine(
-        app_config.db.uri, **app_config.db.orm.engine.dict()
+        app_config.db.uri, **app_config.db.orm.engine.model_dump()
     )
 
     async with connectable.connect() as connection:
