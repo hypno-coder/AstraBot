@@ -38,6 +38,7 @@ class User(Base):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
     telegram_id: Mapped[int] = mapped_column(BigInteger, index=True, unique=True, nullable=False)
+    username: Mapped[str | None] = mapped_column(String(32), nullable=True)
     email: Mapped[str | None] = mapped_column(CITEXT, unique=True, index=True)
     full_name: Mapped[str | None] = mapped_column(String(255))
     lang: Mapped[str] = mapped_column(String(8), default="ru", nullable=False)
@@ -47,6 +48,9 @@ class User(Base):
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     last_seen_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+    is_subscribed: Mapped[bool] = mapped_column(Boolean, server_default=text("true"), nullable=False)
+    unsubscribed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     
     #purchases - Связь с покупками:
         #  - cascade удалит покупки при удалении пользователя,
