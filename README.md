@@ -15,8 +15,7 @@
 ## 1) Создать пустую ревизию для сидов (данные)
 Выполните команду (используются те же переменные подключения, что и для схемы):
 ```bash
-
-docker compose up -d postgres && \ docker compose run --rm \
+docker compose run --rm \
   -e APP_CONF__DB__DB_TYPE=postgresql \
   -e APP_CONF__DB__ADAPTER=asyncpg \
   -e APP_CONF__DB__DB_NAME=bot \
@@ -24,7 +23,6 @@ docker compose up -d postgres && \ docker compose run --rm \
   -e APP_CONF__DB__PASSWORD=password \
   -e APP_CONF__DB__HOST=postgres:5432 \
   app poetry run alembic revision --autogenerate -m "init"
-
 ```
 
 после этого в созданую миграцию дописываем строку которая нужна для корректной работы
