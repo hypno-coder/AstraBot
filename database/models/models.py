@@ -48,7 +48,8 @@ class User(Base):
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     last_seen_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-
+    
+    is_premium: Mapped[bool] = mapped_column(Boolean, server_default=text("false"), nullable=False)
     is_subscribed: Mapped[bool] = mapped_column(Boolean, server_default=text("true"), nullable=False)
     unsubscribed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     

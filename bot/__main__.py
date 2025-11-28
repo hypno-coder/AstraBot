@@ -1,19 +1,19 @@
 import asyncio
 from typing import Awaitable, Callable
 
-import nats
 import orjson
 import structlog
 from aiogram import Bot, Dispatcher
 from aiogram.client.session.aiohttp import AiohttpSession
 from fluentogram import TranslatorHub
-from nats.js.kv import KeyValue
 
-from I18N import i18n_factory
+import nats
 from bot.config import BotConfig
 from bot.handling import schema
 from bot.nats_storage import NATSFSMStorage
 from bot.send_done_photos import run
+from I18N import i18n_factory
+from nats.js.kv import KeyValue
 
 
 def bot_factory(config: BotConfig) -> Bot:
