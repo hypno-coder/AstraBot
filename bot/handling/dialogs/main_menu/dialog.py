@@ -1,25 +1,24 @@
 from aiogram.types import CallbackQuery
-from aiogram_dialog import Dialog, Window
+from aiogram_dialog import Dialog, Window, DialogManager
 from aiogram_dialog.widgets.kbd import Button
 from aiogram_dialog.widgets.text import Const  # или Format, если нужны динамические переводы
-
 from bot.handling.states import Main_menu 
 
 
 # Обработчики нажатий на кнопки (пример, здесь можно реализовать нужную логику)
-async def on_horoscope(callback: CallbackQuery, button, dialog_manager):
+async def on_horoscope(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
     await callback.answer("Вы выбрали 'Гороскоп'")
 
 
-async def on_compatibility(callback: CallbackQuery, button, dialog_manager):
+async def on_compatibility(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
     await callback.answer("Вы выбрали 'Совместимость'")
 
 
-async def on_sonnik(callback: CallbackQuery, button, dialog_manager):
+async def on_sonnik(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
     await callback.answer("Вы выбрали 'Сонник'")
 
 
-async def on_premium(callback: CallbackQuery, button, dialog_manager):
+async def on_premium(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
     await callback.answer("Вы выбрали 'Премиум функции'")
 
 
