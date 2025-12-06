@@ -78,8 +78,7 @@ class UserSyncMiddleware(BaseMiddleware):
     ):
         now = time.time()
         last = self._sync_cache.get(tg_id, 0)
-        # if now - last < self.ttl.value:
-        if now - last < 1:
+        if now - last < self.ttl.value:
             return
         self._sync_cache[tg_id] = now
 
