@@ -1,4 +1,22 @@
 from .base import Base
-from .models import User, Purchase, Product
+from .models import (
+    User, Product, Purchase, PromoCode, MailingCampaign, MailingLog,
+    UserStatus, Gender, ContentType, MailingStatus, MediaType, MailingLogStatus, PaymentProvider
+)
 
-__all__ = ['User', 'Purchase', 'Base', 'Product']
+__all__ = [
+    'Base',
+    'User',
+    'Product',
+    'Purchase',
+    'PromoCode',
+    'MailingCampaign',
+    'MailingLog',
+    'UserStatus',
+    'Gender',
+    'ContentType',
+    'MailingStatus',
+    'MediaType',
+    'MailingLogStatus',
+    'PaymentProvider'
+]

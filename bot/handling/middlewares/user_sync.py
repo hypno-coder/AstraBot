@@ -85,19 +85,18 @@ class UserSyncMiddleware(BaseMiddleware):
         stmt = (
             insert(User)
             .values(
-                telegram_id=tg_id,
+                id=tg_id,
                 username=username,
-                lang=(lang or "ru")[:8],
-                is_premium=is_premium,
-                last_seen_at=func.now(),
+                language_code=(lang or "ru")[:8],
+                is_tele_prem=is_premium,
+                last_visit_date=func.now(),
             )
             .on_conflict_do_update(
-                index_elements=[User.telegram_id],
+                index_elements=[User.id],
                 set_={
                     "username": username,
-                    "lang": (lang or "ru")[:8],
-                    "is_premium": is_premium,
-                    "last_seen_at": func.now(),
+                    "is_tele_prem": is_premium,
+                    "last_visit_date": func.now(),
                 },
             )
         )

@@ -26,6 +26,12 @@ pyinstrument = "^4.6.2"
 orjson = "^3.9.15"
 rich = "^13.7.0"
 faststream = "^0.5.28"
+geopy = "^2.4.1"
+httpx = "^0.27.0"
+beautifulsoup4 = "^4.12.3"
+lxml = "^5.2.2"
+fake-useragent = "^1.5.1"
+redis = {extras = ["asyncio"], version = "^5.0.4"}
 
 
 [build-system]

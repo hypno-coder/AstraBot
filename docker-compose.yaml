@@ -15,6 +15,7 @@ services:
     command: ["poetry", "run", "python", "app.py"]
     depends_on:
       - worker
+      - redis
     profiles:
       - all
 
@@ -73,6 +74,16 @@ services:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
       POSTGRES_DB: bot
+    profiles:
+      - without_bot
+      - infrastructure
+      - all
+
+  redis:
+    image: redis:7.4-alpine
+    restart: on-failure
+    ports:
+      - "6379:6379"
     profiles:
       - without_bot
       - infrastructure

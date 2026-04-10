@@ -3,7 +3,83 @@
 **CRITICAL FOR AI AGENTS:** This document is the absolute and inviolable standard for this project. Any deviation from the tech stack, abstraction layers, or code style rules is STRICTLY PROHIBITED without explicit direct instruction from the user. 
 
 ## 0. CORE PROJECT & BUSINESS LOGIC
-* [TO BE FILLED LATER: Detailed description of the problem being solved, main user flow, and the list of resource-intensive tasks to be offloaded to microservices] *
+CORE PROJECT & BUSINESS LOGIC
+
+### 0.1. Elevator Pitch
+The bot provides personalized esoteric calculations (money calendars, horoscopes, compatibility) based on user-provided data.
+
+### 0.2. DATABASE ENTITIES & RELATIONSHIPS
+The AI Agent must implement the following schema using SQLAlchemy 2.0 with strict typing.
+#### 0.2.1. User Entity
+Stores profile data, split into automated and manual collection phases.
+* **Primary (Automated):**
+    * `id`: BigInteger (Telegram ID), Primary Key.
+    * `username`: String, Nullable.
+    * `is_admin`: Boolean (default: False).
+    * `is_active`: Boolean (default: True, tracks bot block status).
+    * `is_tele_prem`: Boolean (Telegram Premium status).
+    * `status`: Enum ("free", "premium").
+    * `reg_date`: DateTime.
+    * `last_visit_date`: DateTime.
+    * `referred_by`: BigInteger (Foreign Key to User.id).
+    * `language_code`: String (default: "ru")
+* **Secondary (Manual Input):**
+    * `fio`: String (Full Name).
+    * `gender`: Enum (MALE, FEMALE, UNKNOWN).
+    * `birth_city`: String.
+    * `birthday`: Date.    
+    * `birth_time`: Time    
+    * `birth_lat`: Float    
+    * `birth_lon`: Float
+    * `timezone`: String (e.g., "Europe/Moscow").
+####  0.2.2. Product Entity (The Catalog)
+Represents esoteric services available for purchase.
+* `id`: Integer, Primary Key.
+* `title`: String (Service name).
+* `description`: Text.
+* `content_type`: Enum (TEXT, FILE).
+* `content_data`: Text (Stores the actual text or Telegram `file_id` for caching).
+####  0.2.3. Purchase Entity (Transaction Log)
+Links Users and Products (One-to-Many relationship).
+* `id`: Integer, Primary Key.
+* `user_id`: BigInteger (Foreign Key to User.id).
+* `product_id`: Integer (Foreign Key to Product.id).
+* `purchase_date`: DateTime (default: now).
+####  0.2.4. PromoCode Entity
+* `code`: String, Unique Index.
+* `discount_percent`: Integer (1-100, with CheckConstraint).
+* `expires_at`: DateTime, Nullable (NULL = unlimited).
+* `max_uses`: Integer, Nullable (NULL = unlimited).
+* `current_uses`: Integer (default: 0).
+* `allowed_user_id`: BigInteger (Foreign Key to User.id, NULL = for everyone).
+* `target_product_id`: Integer (Foreign Key to Product.id, NULL = for all products).
+####  0.2.5. Mailing System
+* **MailingCampaign:**
+    * `id`: Integer, Primary Key.
+    * `name`: String (Internal name).
+    * `text_content`: Text.
+    * `status`: Enum (DRAFT, SCHEDULED, PROCESSING, COMPLETED, CANCELED).
+    * `scheduled_at`: DateTime, Nullable.
+    * `media_type`: Enum (PHOTO, VIDEO, ANIMATION, DOCUMENT, NONE).
+    * `media_file_id`: String, Nullable.
+    * `reply_markup`: JSONB (Serialized InlineButtons).
+* **MailingLog:**
+    * `id`: BigInteger, Primary Key.
+    * `campaign_id`: Integer (Foreign Key).
+    * `user_id`: BigInteger (Foreign Key).
+    * `status`: Enum (PENDING, SUCCESS, FAILED).
+    * `error_message`: Text, Nullable.
+### 0.3. Integrations & External Services
+* **Payment Gateways:** Integration with Robokassa and Prodamus via secure webhooks for processing Premium service purchases.
+* **LLM Integration (Esoteric AI):** Connection to a specialized neural network API for esoteric consultations. The LLM context must be strictly isolated to esoteric topics via prompt engineering (bypassing tech support or billing queries).
+### 0.4. Background & CPU-Bound Tasks (Strictly for NATS/FastStream Workers)
+To prevent blocking the main aiogram event loop, the following tasks MUST be offloaded to isolated microservices:
+* **Artifact Generation:** Creating graphical/PDF reports (e.g., Natal charts, Yantras) and uploading to NATS Object Store.
+* **Heavy Processing & Scraping:** Complex astrological calculations and parsing external esoteric resources (using tools like Selenium where API is unavailable).
+* **Mass Mailing:** Daily broadcast campaigns (e.g., morning horoscopes) for thousands of users using the MailingSystem entities.
+### 0.5. Core User Flow Strategy
+* **Progressive Profiling:** Users start with auto-collected data (Primary). Accessing deeper features requires manual profile completion (Secondary data: birth info, coords).
+* **Tiered Access:** Clear separation between Free features (e.g., daily horoscopes) and Premium gated content (e.g., Yantras, deep calculations).
 
 ## 1. TECHNOLOGY STACK (STRICT)
 * **Bot Framework:** `aiogram v3.4.x` (strictly asynchronous).
