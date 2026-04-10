@@ -4,7 +4,7 @@ import structlog
 from aiogram import Dispatcher
 from aiogram_dialog import StartMode, setup_dialogs
 
-from bot.handling.dialogs import main_dialog, profile_dialog, admin_dialog, horoscope_dialog
+from bot.handling.dialogs import main_dialog, profile_dialog, admin_dialog, horoscope_dialog, referral_dialog
 from bot.handling.filters import ChatType, ChatTypeFilter
 from bot.handling.handlers import get_user_router, start_router, sub_router, admin_router
 from bot.handling.middlewares import (DatabaseMiddleware,
@@ -46,6 +46,7 @@ async def assemble(
     dp.include_router(profile_dialog)
     dp.include_router(admin_dialog)
     dp.include_router(horoscope_dialog)
+    dp.include_router(referral_dialog)
     
     dp.include_router(admin_router)
     dp.include_router(get_user_router)

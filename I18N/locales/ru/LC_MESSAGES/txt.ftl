@@ -107,3 +107,16 @@ horo_finance = Финансы
 horo_health = Здоровье
 horo_love = Любовь
 horo_error = ⚠️ Гороскоп временно недоступен. Попробуйте позже.
+
+# Referral
+ref_btt = 💎 Реферальная программа
+ref_title = <b>💎 Реферальная программа</b>
+ref_progress = 👥 Приглашено: { $current } из { $goal }
+ref_premium_active = ✅ Premium активен до: { $date }
+ref_premium_inactive = ❌ Premium: не активен
+ref_body =
+    Приглашайте друзей и получайте <b>30 дней Premium</b> за каждые 5 успешных приглашений.
+    
+    Друг должен запустить бота по вашей ссылке, чтобы приглашение засчиталось! 🚀
+ref_invite_btt = 🔗 Пригласить друга
+ref_invite_share_text = Привет! Попробуй этот Астро-бот 🌟 https://t.me/{ $bot_username }?start={ $user_id }

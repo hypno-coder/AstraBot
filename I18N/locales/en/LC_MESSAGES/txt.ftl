@@ -107,3 +107,16 @@ horo_finance = Finance
 horo_health = Health
 horo_love = Love
 horo_error = ⚠️ Horoscope is temporarily unavailable. Try again later.
+
+# Referral
+ref_btt = 💎 Referral Program
+ref_title = <b>💎 Referral Program</b>
+ref_progress = 👥 Invited: { $current } of { $goal }
+ref_premium_active = ✅ Premium active until: { $date }
+ref_premium_inactive = ❌ Premium: inactive
+ref_body =
+    Invite friends and earn <b>30 days of Premium</b> for every 5 successful referrals.
+    
+    Your friend must launch the bot via your link to count! 🚀
+ref_invite_btt = 🔗 Invite a Friend
+ref_invite_share_text = Hey! Try this Astrology bot 🌟 https://t.me/{ $bot_username }?start={ $user_id }

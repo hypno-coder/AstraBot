@@ -23,5 +23,6 @@ async def get_main_menu_data(dialog_manager: DialogManager, **kwargs):
         "horoscope_btt": i18n.horoscope_btt(),
         "compatibility_btt": i18n.compatibility_btt(),
         "sonnik_btt": i18n.sonnik_btt(),
-        "premium_features_btt": i18n.premium_features_btt()
+        "premium_features_btt": i18n.premium_features_btt(),
+        "ref_btt": i18n.ref_btt(),
     }

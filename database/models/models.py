@@ -81,6 +81,8 @@ class User(Base):
     birth_lon: Mapped[float | None] = mapped_column(Float)
     timezone: Mapped[str | None] = mapped_column(String(64))
     zodiac_sign: Mapped[str | None] = mapped_column(String(32))
+    referral_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False, server_default="0")
+    premium_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     # Relationships
     purchases: Mapped[list["Purchase"]] = relationship(back_populates="user", cascade="all,delete-orphan", lazy="selectin")

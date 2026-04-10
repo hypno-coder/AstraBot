@@ -1,9 +1,10 @@
 from aiogram.types import CallbackQuery
+from aiogram import F
 from aiogram_dialog import Dialog, Window, DialogManager, StartMode
 from aiogram_dialog.widgets.kbd import Button, Start
 from aiogram_dialog.widgets.text import Const, Format
 from sqlalchemy import select
-from bot.handling.states import Main_menu, Profile, AdminGroup, HoroscopeGroup
+from bot.handling.states import Main_menu, Profile, AdminGroup, HoroscopeGroup, ReferralGroup
 from .getters import get_main_menu_data
 
 # Обработчики нажатий на кнопки (пример, здесь можно реализовать нужную логику)
@@ -31,6 +32,7 @@ menu_window = Window(
     Start(Format("{admin_btt}"), id="go_admin", state=AdminGroup.view, when="is_admin"),
     Start(Format("{profile_btt}"), id="go_profile", state=Profile.view),
     Button(Format("{horoscope_btt}"), id="horoscope", on_click=on_horoscope),
+    Start(Format("{ref_btt}"), id="go_ref", state=ReferralGroup.view),
     Button(Format("{sonnik_btt}"), id="sonnik", on_click=on_sonnik),
     Button(Format("{premium_features_btt}"), id="premium", on_click=on_premium),
     state=Main_menu.start,
