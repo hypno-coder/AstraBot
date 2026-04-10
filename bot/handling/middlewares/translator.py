@@ -29,6 +29,15 @@ class TranslatorRunnerMiddleware(BaseMiddleware):
             return await event_handler(event, ctx_data)
 
         lang = from_user.language_code
+        
+        db = ctx_data.get("db")
+        if db:
+            from database.models import User
+            from sqlalchemy import select
+            user = await db.scalar(select(User).where(User.id == from_user.id))
+            if user and user.language_code:
+                lang = user.language_code
+
         ctx_data[self.translator_runner_alias] = translator_hub.get_translator_by_locale(lang)
         await event_handler(event, ctx_data)
         await self.logger.debug('TranslatorRunnerMiddleware end')

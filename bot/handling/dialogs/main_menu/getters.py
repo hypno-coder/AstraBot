@@ -17,5 +17,11 @@ async def get_main_menu_data(dialog_manager: DialogManager, **kwargs):
     i18n = dialog_manager.middleware_data["i18n"]
     return {
         "is_admin": is_admin,
-        "admin_btt": i18n.admin_btt()
+        "admin_btt": i18n.admin_btt(),
+        "main_menu_prompt": i18n.main_menu_prompt(),
+        "profile_btt": i18n.profile_btt(),
+        "horoscope_btt": i18n.horoscope_btt(),
+        "compatibility_btt": i18n.compatibility_btt(),
+        "sonnik_btt": i18n.sonnik_btt(),
+        "premium_features_btt": i18n.premium_features_btt()
     }

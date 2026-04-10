@@ -95,7 +95,6 @@ class UserSyncMiddleware(BaseMiddleware):
                 index_elements=[User.id],
                 set_={
                     "username": username,
-                    "language_code": (lang or "ru")[:8],
                     "is_tele_prem": is_premium,
                     "last_visit_date": func.now(),
                 },

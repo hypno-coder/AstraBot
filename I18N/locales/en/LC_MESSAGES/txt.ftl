@@ -3,14 +3,15 @@ enter_watermark = "Type watermark text"
 in_progress = "Photo in progress"
 db_get_user = User {$user}
 
+main_menu_prompt = Choose an option:
 #Buttons
-horoscope_btt = "Horoscope"
-compatibility_btt = "Compatibility"
-sonnik_btt = "Dream book"
-premium_features_btt = "Premium features"
+horoscope_btt = Horoscope
+compatibility_btt = Compatibility
+sonnik_btt = Dream book
+premium_features_btt = Premium features
 
 # Profile UI
-profile_btt = "👤 My profile"
+profile_btt = 👤 My profile
 profile_title = <b>👤 Your profile:</b>
 
 profile_fio = 👤 Full Name: { $fio }

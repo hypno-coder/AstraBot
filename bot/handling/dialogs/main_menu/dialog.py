@@ -23,13 +23,13 @@ async def on_premium(callback: CallbackQuery, button: Button, dialog_manager: Di
 
 
 menu_window = Window(
-    Const("Выберите опцию:"),
+    Format("{main_menu_prompt}"),
     Start(Format("{admin_btt}"), id="go_admin", state=AdminGroup.view, when="is_admin"),
-    Start(Const("👤 Мой профиль"), id="go_profile", state=Profile.view),
-    Button(Const("Гороскоп"), id="horoscope", on_click=on_horoscope),
-    Button(Const("Совместимость"), id="compatibility", on_click=on_compatibility),
-    Button(Const("Сонник"), id="sonnik", on_click=on_sonnik),
-    Button(Const("Премиум функции"), id="premium", on_click=on_premium),
+    Start(Format("{profile_btt}"), id="go_profile", state=Profile.view),
+    Button(Format("{horoscope_btt}"), id="horoscope", on_click=on_horoscope),
+    Button(Format("{compatibility_btt}"), id="compatibility", on_click=on_compatibility),
+    Button(Format("{sonnik_btt}"), id="sonnik", on_click=on_sonnik),
+    Button(Format("{premium_features_btt}"), id="premium", on_click=on_premium),
     state=Main_menu.start,
     getter=get_main_menu_data
 )

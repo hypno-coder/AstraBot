@@ -3,14 +3,15 @@ enter_watermark = "Напишите текст вотермарки"
 in_progress = "Ща вотермарка наложится"
 db_get_user = Юзер {$user}
 
+main_menu_prompt = Выберите опцию:
 #Buttons
-horoscope_btt = "Гороскоп"
-compatibility_btt = "Совместимость"
-sonnik_btt = "Сонник"
-premium_features_btt = "Премиум функции"
+horoscope_btt = Гороскоп
+compatibility_btt = Совместимость
+sonnik_btt = Сонник
+premium_features_btt = Премиум функции
 
 # Profile UI
-profile_btt = "👤 Мой профиль"
+profile_btt = 👤 Мой профиль
 profile_title = <b>👤 Ваш профиль:</b>
 
 profile_fio = 👤 ФИО: { $fio }
