@@ -65,7 +65,18 @@ async def get_profile_data(dialog_manager: DialogManager, **kwargs):
     else:
         birth_city = not_set
         
-    birthday = f"{user.birthday.strftime('%Y-%m-%d')} ✅" if user and user.birthday else not_set
+    birthday_raw = f"{user.birthday.strftime('%Y-%m-%d')}" if user and user.birthday else None
+    zodiac_emoji = {
+        "aries": "♈", "taurus": "♉", "gemini": "♊", "cancer": "♋",
+        "leo": "♌", "virgo": "♍", "libra": "♎", "scorpio": "♏",
+        "sagittarius": "♐", "capricorn": "♑", "aquarius": "♒", "pisces": "♓",
+    }
+    if birthday_raw:
+        zodiac = user.zodiac_sign or ""
+        zodiac_part = f" {zodiac_emoji.get(zodiac, '')}" if zodiac else ""
+        birthday = f"{birthday_raw}{zodiac_part} ✅"
+    else:
+        birthday = not_set
     birth_time = f"{user.birth_time.strftime('%H:%M')} ✅" if user and user.birth_time else not_set
     
     if user and user.timezone:

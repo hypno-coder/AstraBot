@@ -69,5 +69,11 @@ async def on_gender_selected(callback: CallbackQuery, widget: Any, dialog_manage
 
 async def on_date_selected(callback: CallbackQuery, widget: Any, dialog_manager: DialogManager, selected_date: date):
     db: AsyncSession = dialog_manager.middleware_data["db"]
-    await db.execute(update(User).where(User.id == callback.from_user.id).values(birthday=selected_date))
+    from bot.services.zodiac import calculate_zodiac
+    zodiac = calculate_zodiac(selected_date)
+    await db.execute(
+        update(User)
+        .where(User.id == callback.from_user.id)
+        .values(birthday=selected_date, zodiac_sign=zodiac)
+    )
     await dialog_manager.switch_to(Profile.view)
