@@ -94,3 +94,16 @@ stub_tech_block_bot = Блокировка бота
 confirm_action_prompt = ⚠️ Вы уверены? Это повлияет на всю систему.
 btn_confirm_yes = ✅ Да, я уверен
 btn_confirm_no = ❌ Нет, отмена
+
+# Horoscope
+horo_ask_dob = 📅 Для гороскопа нам нужна ваша дата рождения. Выберите её:
+horo_select_period = Выберите период:
+horo_compat_btt = 🔮 Совместимость
+horo_compat_gender = 🚻 Выберите пол вашего партнёра:
+horo_compat_male = 👨 Мужчина
+horo_compat_female = 👩 Женщина
+horo_compat_zodiac = ♈ Выберите знак зодиака партнёра:
+horo_finance = Финансы
+horo_health = Здоровье
+horo_love = Любовь
+horo_error = ⚠️ Гороскоп временно недоступен. Попробуйте позже.

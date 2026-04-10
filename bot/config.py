@@ -9,6 +9,12 @@ class FSM(BaseModel):
         extras = 'allow'
 
 
+class RedisConfig(BaseModel):
+    host: str = "redis"
+    port: int = 6379
+    db: int = 0
+
+
 class BotConfig(BaseModel):
     token: SecretStr
     owner_id: int | None = None

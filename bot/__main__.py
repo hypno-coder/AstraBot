@@ -1,6 +1,7 @@
 import asyncio
 from typing import Awaitable, Callable
 
+import httpx
 import orjson
 import structlog
 from aiogram import Bot, Dispatcher
@@ -8,6 +9,7 @@ from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 from aiogram.client.session.aiohttp import AiohttpSession
 from fluentogram import TranslatorHub
+from redis.asyncio import Redis
 
 import nats
 from bot.config import BotConfig
@@ -59,14 +61,22 @@ async def main(
     bot_representation = await bot.me()
     await logger.info(f'Bot {bot_representation.first_name} is ready to serve requests')
     try:
-        await asyncio.gather(dp.start_polling(
-                                bot,
-                                bot_config=config,
-                                _translator_hub=_i18n_factory(),
-                                nc=nc,
-                                _db_session_maker=session_maker,
-                            ),
-                            run(bot, nats_address)
+        http_client = httpx.AsyncClient(timeout=15.0)
+        redis_client = Redis(host="redis", port=6379, db=0, decode_responses=False)
+        await logger.info("httpx and Redis clients initialized")
+        await asyncio.gather(
+            dp.start_polling(
+                bot,
+                bot_config=config,
+                _translator_hub=_i18n_factory(),
+                nc=nc,
+                _db_session_maker=session_maker,
+                http_client=http_client,
+                redis=redis_client,
+            ),
+            run(bot, nats_address)
         )
     finally:
+        await http_client.aclose()
+        await redis_client.aclose()
         await nc.close()

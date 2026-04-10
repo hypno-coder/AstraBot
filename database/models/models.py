@@ -80,6 +80,7 @@ class User(Base):
     birth_lat: Mapped[float | None] = mapped_column(Float)
     birth_lon: Mapped[float | None] = mapped_column(Float)
     timezone: Mapped[str | None] = mapped_column(String(64))
+    zodiac_sign: Mapped[str | None] = mapped_column(String(32))
 
     # Relationships
     purchases: Mapped[list["Purchase"]] = relationship(back_populates="user", cascade="all,delete-orphan", lazy="selectin")

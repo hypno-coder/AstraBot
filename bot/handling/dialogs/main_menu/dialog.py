@@ -1,13 +1,20 @@
 from aiogram.types import CallbackQuery
-from aiogram_dialog import Dialog, Window, DialogManager
+from aiogram_dialog import Dialog, Window, DialogManager, StartMode
 from aiogram_dialog.widgets.kbd import Button, Start
 from aiogram_dialog.widgets.text import Const, Format
-from bot.handling.states import Main_menu, Profile, AdminGroup
+from sqlalchemy import select
+from bot.handling.states import Main_menu, Profile, AdminGroup, HoroscopeGroup
 from .getters import get_main_menu_data
 
 # Обработчики нажатий на кнопки (пример, здесь можно реализовать нужную логику)
 async def on_horoscope(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
-    await callback.answer("Вы выбрали 'Гороскоп'")
+    """Route to ask_dob if no zodiac_sign, else directly to horoscope view."""
+    from database.models import User
+    from sqlalchemy.ext.asyncio import AsyncSession
+    db: AsyncSession = dialog_manager.middleware_data["db"]
+    user = await db.scalar(select(User).where(User.id == callback.from_user.id))
+    start_state = HoroscopeGroup.view if (user and user.zodiac_sign) else HoroscopeGroup.ask_dob
+    await dialog_manager.start(start_state, mode=StartMode.NORMAL)
 
 
 async def on_compatibility(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):

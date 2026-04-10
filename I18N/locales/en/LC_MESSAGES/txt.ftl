@@ -94,3 +94,16 @@ stub_tech_block_bot = Block Bot
 confirm_action_prompt = ⚠️ Are you sure? This will affect the entire system.
 btn_confirm_yes = ✅ Yes, I'm sure
 btn_confirm_no = ❌ No, cancel
+
+# Horoscope
+horo_ask_dob = 📅 We need your date of birth for the horoscope. Please select it:
+horo_select_period = Select period:
+horo_compat_btt = 🔮 Compatibility
+horo_compat_gender = 🚻 Select your partner's gender:
+horo_compat_male = 👨 Male
+horo_compat_female = 👩 Female
+horo_compat_zodiac = ♈ Select your partner's zodiac sign:
+horo_finance = Finance
+horo_health = Health
+horo_love = Love
+horo_error = ⚠️ Horoscope is temporarily unavailable. Try again later.
