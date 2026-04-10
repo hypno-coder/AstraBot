@@ -7,5 +7,5 @@ class Profile(StatesGroup):
     edit_birth_city = State()
     edit_birthday = State()
     edit_birth_time = State()
-    edit_coords = State()
+    confirm_city = State()
     edit_timezone = State()

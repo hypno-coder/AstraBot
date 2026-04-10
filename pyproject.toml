@@ -26,6 +26,7 @@ pyinstrument = "^4.6.2"
 orjson = "^3.9.15"
 rich = "^13.7.0"
 faststream = "^0.5.28"
+geopy = "^2.4.1"
 
 
 [build-system]

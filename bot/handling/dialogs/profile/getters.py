@@ -57,10 +57,16 @@ async def get_profile_data(dialog_manager: DialogManager, **kwargs):
     gender_translated = gender_map.get(user.gender.value if user and user.gender else "")
     gender = f"{gender_translated} ✅" if gender_translated else not_set
     
-    birth_city = f"{user.birth_city} ✅" if user and user.birth_city else not_set
+    if user and user.birth_city:
+        if user.birth_lat and user.birth_lon:
+            birth_city = f"{user.birth_city} ({user.birth_lat}, {user.birth_lon}) ✅"
+        else:
+            birth_city = f"{user.birth_city} ✅"
+    else:
+        birth_city = not_set
+        
     birthday = f"{user.birthday.strftime('%Y-%m-%d')} ✅" if user and user.birthday else not_set
     birth_time = f"{user.birth_time.strftime('%H:%M')} ✅" if user and user.birth_time else not_set
-    coords = f"{user.birth_lat}, {user.birth_lon} ✅" if user and user.birth_lat and user.birth_lon else not_set
     
     if user and user.timezone:
         tz_offset = REVERSE_TZ.get(user.timezone, user.timezone)
@@ -85,7 +91,6 @@ async def get_profile_data(dialog_manager: DialogManager, **kwargs):
         "profile_city": i18n.profile_city(birth_city=birth_city),
         "profile_birthday": i18n.profile_birthday(birthday=birthday),
         "profile_time": i18n.profile_time(birth_time=birth_time),
-        "profile_coords": i18n.profile_coords(coords=coords),
         "profile_timezone": i18n.profile_timezone(timezone=timezone),
         
         "btn_edit_fio": i18n.btn_edit_fio(),
@@ -93,7 +98,6 @@ async def get_profile_data(dialog_manager: DialogManager, **kwargs):
         "btn_edit_city": i18n.btn_edit_city(),
         "btn_edit_birthday": i18n.btn_edit_birthday(), 
         "btn_edit_time": i18n.btn_edit_time(),
-        "btn_edit_coords": i18n.btn_edit_coords(),
         "btn_edit_timezone": i18n.btn_edit_timezone(),
         "btn_back": i18n.btn_back(),
 
@@ -102,8 +106,13 @@ async def get_profile_data(dialog_manager: DialogManager, **kwargs):
         "prompt_city": i18n.prompt_city(),
         "prompt_birthday": i18n.prompt_birthday(),
         "prompt_time": i18n.prompt_time(),
-        "prompt_coords": i18n.prompt_coords(),
         "prompt_timezone": i18n.prompt_timezone(),
+        
+        "confirm_city_prompt": i18n.confirm_city_prompt(
+            address=dialog_manager.dialog_data.get("address", "")
+        ),
+        "btn_yes_city": i18n.btn_yes_city(),
+        "btn_no_city": i18n.btn_no_city(),
         
         "genders": genders,
         "timezones": timezones

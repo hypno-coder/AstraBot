@@ -9,7 +9,7 @@ from bot.handling.states.profile import Profile
 from bot.handling.states.main_menu import Main_menu
 from .getters import get_profile_data
 from .handlers import (
-    save_fio, save_city, save_time, save_coords, 
+    save_fio, save_city, save_time, on_city_confirmed,
     on_timezone_selected, on_gender_selected, on_date_selected
 )
 
@@ -21,7 +21,6 @@ dialog = Dialog(
         Format("{profile_city}"),
         Format("{profile_birthday}"),
         Format("{profile_time}"),
-        Format("{profile_coords}"),
         Format("{profile_timezone}\n"),
         Group(
             Row(
@@ -34,9 +33,8 @@ dialog = Dialog(
             ),
             Row(
                 SwitchTo(Format("{btn_edit_time}"), id="set_time", state=Profile.edit_birth_time),
-                SwitchTo(Format("{btn_edit_coords}"), id="set_coords", state=Profile.edit_coords),
+                SwitchTo(Format("{btn_edit_timezone}"), id="set_tz", state=Profile.edit_timezone),
             ),
-            SwitchTo(Format("{btn_edit_timezone}"), id="set_tz", state=Profile.edit_timezone),
         ),
         Cancel(Format("{btn_back}")),
         state=Profile.view,
@@ -70,6 +68,15 @@ dialog = Dialog(
         getter=get_profile_data
     ),
     Window(
+        Format("{confirm_city_prompt}"),
+        Row(
+            Button(Format("{btn_yes_city}"), id="yes_city", on_click=on_city_confirmed),
+            SwitchTo(Format("{btn_no_city}"), id="no_city", state=Profile.edit_birth_city),
+        ),
+        state=Profile.confirm_city,
+        getter=get_profile_data
+    ),
+    Window(
         Format("{prompt_birthday}"),
         Calendar(id="calendar", on_click=on_date_selected),
         SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
@@ -81,13 +88,6 @@ dialog = Dialog(
         MessageInput(save_time),
         SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
         state=Profile.edit_birth_time,
-        getter=get_profile_data
-    ),
-    Window(
-        Format("{prompt_coords}"),
-        MessageInput(save_coords),
-        SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
-        state=Profile.edit_coords,
         getter=get_profile_data
     ),
     Window(
