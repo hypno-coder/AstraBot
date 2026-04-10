@@ -120,3 +120,5 @@ ref_body =
     Your friend must launch the bot via your link to count! 🚀
 ref_invite_btt = 🔗 Invite a Friend
 ref_invite_share_text = Hey! Try this Astrology bot 🌟 https://t.me/{ $bot_username }?start={ $user_id }
+ref_link_title = Your referral link:
+ref_link_hint = 📝 Copy the link and share it with friends! When they launch the bot — your invite will be counted. 🚀

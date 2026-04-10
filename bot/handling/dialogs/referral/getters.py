@@ -33,6 +33,8 @@ async def get_referral_data(dialog_manager: DialogManager, **kwargs):
         "ref_premium_status": premium_str,
         "ref_body": i18n.ref_body(),
         "ref_invite_btt": i18n.ref_invite_btt(),
+        "ref_link_title": i18n.ref_link_title(),
+        "ref_link_hint": i18n.ref_link_hint(),
         "btn_back": i18n.btn_back(),
         # Inline query text for SwitchInlineQueryCurrentChat / invite link
         "invite_link": f"https://t.me/{bot_info.username}?start={dialog_manager.event.from_user.id}",
