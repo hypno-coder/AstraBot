@@ -44,6 +44,9 @@ async def get_profile_data(dialog_manager: DialogManager, **kwargs):
     result = await db.execute(select(User).where(User.id == user_id))
     user = result.scalar_one_or_none()
 
+    lang = dialog_manager.middleware_data.get("user_language", "ru")
+    date_fmt = "%d.%m.%Y" if lang == "ru" else "%Y.%m.%d"
+
     not_set = i18n.profile_not_set()
 
     fio = f"{user.fio} ✅" if user and user.fio else not_set
@@ -65,7 +68,7 @@ async def get_profile_data(dialog_manager: DialogManager, **kwargs):
     else:
         birth_city = not_set
         
-    birthday_raw = f"{user.birthday.strftime('%Y-%m-%d')}" if user and user.birthday else None
+    birthday_raw = f"{user.birthday.strftime(date_fmt)}" if user and user.birthday else None
     zodiac_emoji = {
         "aries": "♈", "taurus": "♉", "gemini": "♊", "cancer": "♋",
         "leo": "♌", "virgo": "♍", "libra": "♎", "scorpio": "♏",

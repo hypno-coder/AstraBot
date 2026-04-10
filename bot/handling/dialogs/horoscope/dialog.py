@@ -2,8 +2,9 @@ import operator
 
 from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.kbd import (
-    Button, Row, Group, SwitchTo, Select, Calendar, Cancel, Back
+    Button, Row, Group, SwitchTo, Select, Cancel, Back
 )
+from bot.widgets.localized_calendar import LocalizedCalendar
 from aiogram_dialog.widgets.text import Format
 
 from bot.handling.states.horoscope import HoroscopeGroup
@@ -17,7 +18,7 @@ dialog = Dialog(
     # ── Window 1: Ask DOB if no zodiac sign ──────────────────────────────────
     Window(
         Format("{horo_ask_dob}"),
-        Calendar(id="horo_calendar", on_click=on_dob_selected),
+        LocalizedCalendar(id="horo_calendar", on_click=on_dob_selected),
         Cancel(Format("{btn_back}")),
         state=HoroscopeGroup.ask_dob,
         getter=get_horoscope_data,

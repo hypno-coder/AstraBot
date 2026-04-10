@@ -39,5 +39,6 @@ class TranslatorRunnerMiddleware(BaseMiddleware):
                 lang = user.language_code
 
         ctx_data[self.translator_runner_alias] = translator_hub.get_translator_by_locale(lang)
+        ctx_data["user_language"] = lang   # exposes resolved language to middleware_data
         await event_handler(event, ctx_data)
         await self.logger.debug('TranslatorRunnerMiddleware end')

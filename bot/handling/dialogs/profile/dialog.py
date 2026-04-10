@@ -1,7 +1,8 @@
 import operator
 
 from aiogram_dialog import Dialog, Window
-from aiogram_dialog.widgets.kbd import Button, Row, Group, SwitchTo, Select, Calendar, Cancel, ScrollingGroup
+from aiogram_dialog.widgets.kbd import Button, Row, Group, SwitchTo, Select, Cancel, ScrollingGroup
+from bot.widgets.localized_calendar import LocalizedCalendar
 from aiogram_dialog.widgets.text import Const, Format
 from aiogram_dialog.widgets.input import MessageInput
 
@@ -78,7 +79,7 @@ dialog = Dialog(
     ),
     Window(
         Format("{prompt_birthday}"),
-        Calendar(id="calendar", on_click=on_date_selected),
+        LocalizedCalendar(id="calendar", on_click=on_date_selected),
         SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
         state=Profile.edit_birthday,
         getter=get_profile_data
