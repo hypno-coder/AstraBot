@@ -48,3 +48,48 @@ confirm_city_prompt = 📍 Это ваш город?
 btn_yes_city = ✅ Да, верно
 btn_no_city = ❌ Нет, ввести заново
 error_city_not_found = ❌ Мы не смогли найти такой город. Попробуйте еще раз или введите более крупный соседний город.
+
+# Admin Panel
+
+admin_btt = 🔐 Админ Панель
+admin_header = 📊 Юзеров: { $users } | 💰 Касса сегодня: { $cash } | 🧠 ИИ: { $ai_status }
+lang_toggle = 🇺🇸 Переключить на английский
+admin_back = ⬅️ Назад
+
+btn_admin_analytics = 📊 Аналитика и Статистика
+btn_admin_users = 👥 Управление пользователями
+btn_admin_finance = 💳 Финансы и Тарифы
+btn_admin_broadcast = 📢 Рассылка и Вещание
+btn_admin_tech = 🛠 Техзона
+
+# Analytics
+stub_analytics_stats = Статистика
+stub_analytics_tokens = Расход токенов
+stub_analytics_payments = Список оплат
+
+# Users
+stub_users_search = Поиск пользователя
+stub_users_block = Блокировка/Разблокировка
+stub_users_reply = Ответ от имени бота
+stub_users_dialogs = Диалоги
+
+# Finance
+stub_finance_search = Поиск по чеку/ID
+stub_finance_gift = Подарить Premium
+stub_finance_prices = Изменение цен
+stub_finance_promos = Промокоды
+
+# Broadcasting
+stub_broadcast_create = Создать рассылку
+stub_broadcast_stats = Статистика рассылки
+
+# Tech Zone
+stub_tech_maintenance = Режим техобслуживания
+stub_tech_admin = Создание админа
+stub_tech_restart_bot = Перезагрузка бота
+stub_tech_restart_server = Перезагрузка сервера
+stub_tech_block_bot = Блокировка бота
+
+confirm_action_prompt = ⚠️ Вы уверены? Это повлияет на всю систему.
+btn_confirm_yes = ✅ Да, я уверен
+btn_confirm_no = ❌ Нет, отмена

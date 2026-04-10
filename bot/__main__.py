@@ -61,6 +61,7 @@ async def main(
     try:
         await asyncio.gather(dp.start_polling(
                                 bot,
+                                bot_config=config,
                                 _translator_hub=_i18n_factory(),
                                 nc=nc,
                                 _db_session_maker=session_maker,

@@ -11,6 +11,7 @@ class FSM(BaseModel):
 
 class BotConfig(BaseModel):
     token: SecretStr
+    owner_id: int | None = None
     fsm: FSM
 
     class Config:

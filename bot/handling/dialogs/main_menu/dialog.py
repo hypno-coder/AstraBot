@@ -2,7 +2,8 @@ from aiogram.types import CallbackQuery
 from aiogram_dialog import Dialog, Window, DialogManager
 from aiogram_dialog.widgets.kbd import Button, Start
 from aiogram_dialog.widgets.text import Const, Format
-from bot.handling.states import Main_menu, Profile
+from bot.handling.states import Main_menu, Profile, AdminGroup
+from .getters import get_main_menu_data
 
 # Обработчики нажатий на кнопки (пример, здесь можно реализовать нужную логику)
 async def on_horoscope(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
@@ -23,12 +24,14 @@ async def on_premium(callback: CallbackQuery, button: Button, dialog_manager: Di
 
 menu_window = Window(
     Const("Выберите опцию:"),
+    Start(Format("{admin_btt}"), id="go_admin", state=AdminGroup.view, when="is_admin"),
     Start(Const("👤 Мой профиль"), id="go_profile", state=Profile.view),
     Button(Const("Гороскоп"), id="horoscope", on_click=on_horoscope),
     Button(Const("Совместимость"), id="compatibility", on_click=on_compatibility),
     Button(Const("Сонник"), id="sonnik", on_click=on_sonnik),
     Button(Const("Премиум функции"), id="premium", on_click=on_premium),
     state=Main_menu.start,
+    getter=get_main_menu_data
 )
 
 dialog = Dialog(menu_window)
