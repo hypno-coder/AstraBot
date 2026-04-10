@@ -1,7 +1,7 @@
 import operator
 
 from aiogram_dialog import Dialog, Window
-from aiogram_dialog.widgets.kbd import Button, Row, Group, SwitchTo, Select, Calendar, Cancel
+from aiogram_dialog.widgets.kbd import Button, Row, Group, SwitchTo, Select, Calendar, Cancel, ScrollingGroup
 from aiogram_dialog.widgets.text import Const, Format
 from aiogram_dialog.widgets.input import MessageInput
 
@@ -9,8 +9,8 @@ from bot.handling.states.profile import Profile
 from bot.handling.states.main_menu import Main_menu
 from .getters import get_profile_data
 from .handlers import (
-    save_fio, save_city, save_time, save_coords, save_timezone, 
-    on_gender_selected, on_date_selected
+    save_fio, save_city, save_time, save_coords, 
+    on_timezone_selected, on_gender_selected, on_date_selected
 )
 
 dialog = Dialog(
@@ -92,7 +92,18 @@ dialog = Dialog(
     ),
     Window(
         Format("{prompt_timezone}"),
-        MessageInput(save_timezone),
+        ScrollingGroup(
+            Select(
+                Format("{item[1]}"),
+                id="s_tz",
+                item_id_getter=operator.itemgetter(0),
+                items="timezones",
+                on_click=on_timezone_selected
+            ),
+            id="tz_sg",
+            width=3,
+            height=6,
+        ),
         SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
         state=Profile.edit_timezone,
         getter=get_profile_data

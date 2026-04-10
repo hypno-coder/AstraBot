@@ -4,6 +4,38 @@ from sqlalchemy import select
 from database.models import User
 from fluentogram import TranslatorRunner
 
+TIMEZONE_MAPPING = {
+    "-12": "Etc/GMT+12",
+    "-11": "Pacific/Midway",
+    "-10": "Pacific/Honolulu",
+    "-9": "America/Anchorage",
+    "-8": "America/Los_Angeles",
+    "-7": "America/Denver",
+    "-6": "America/Chicago",
+    "-5": "America/New_York",
+    "-4": "America/Caracas",
+    "-3": "America/Argentina/Buenos_Aires",
+    "-2": "Atlantic/South_Georgia",
+    "-1": "Atlantic/Azores",
+    "0": "Europe/London",
+    "+1": "Europe/Paris",
+    "+2": "Europe/Kyiv",
+    "+3": "Europe/Moscow",
+    "+4": "Asia/Dubai",
+    "+5": "Asia/Yekaterinburg",
+    "+6": "Asia/Omsk",
+    "+7": "Asia/Novosibirsk",
+    "+8": "Asia/Singapore",
+    "+9": "Asia/Tokyo",
+    "+10": "Australia/Sydney",
+    "+11": "Pacific/Guadalcanal",
+    "+12": "Pacific/Fiji",
+    "+13": "Pacific/Tongatapu",
+    "+14": "Pacific/Kiritimati",
+}
+
+REVERSE_TZ = {v: k for k, v in TIMEZONE_MAPPING.items()}
+
 async def get_profile_data(dialog_manager: DialogManager, **kwargs):
     i18n: TranslatorRunner = dialog_manager.middleware_data["i18n"]
     db: AsyncSession = dialog_manager.middleware_data["db"]
@@ -29,7 +61,15 @@ async def get_profile_data(dialog_manager: DialogManager, **kwargs):
     birthday = f"{user.birthday.strftime('%Y-%m-%d')} ✅" if user and user.birthday else not_set
     birth_time = f"{user.birth_time.strftime('%H:%M')} ✅" if user and user.birth_time else not_set
     coords = f"{user.birth_lat}, {user.birth_lon} ✅" if user and user.birth_lat and user.birth_lon else not_set
-    timezone = f"{user.timezone} ✅" if user and user.timezone else not_set
+    
+    if user and user.timezone:
+        tz_offset = REVERSE_TZ.get(user.timezone, user.timezone)
+        timezone = f"UTC {tz_offset} ✅" if tz_offset in TIMEZONE_MAPPING else f"{tz_offset} ✅"
+    else:
+        timezone = not_set
+
+    # Prepare timezone choices for the Select widget
+    timezones = [(k, f"UTC {k}") for k in TIMEZONE_MAPPING.keys()]
 
     # Also prepare gender choices for the Select widget
     genders = [
@@ -65,5 +105,6 @@ async def get_profile_data(dialog_manager: DialogManager, **kwargs):
         "prompt_coords": i18n.prompt_coords(),
         "prompt_timezone": i18n.prompt_timezone(),
         
-        "genders": genders
+        "genders": genders,
+        "timezones": timezones
     }

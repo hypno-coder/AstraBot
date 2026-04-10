@@ -19,7 +19,7 @@ profile_city = 🏙 Город рождения: { $birth_city }
 profile_birthday = 📅 Дата рождения: { $birthday }
 profile_time = 🕒 Время рождения: { $birth_time }
 profile_coords = 📍 Координаты: { $coords }
-profile_timezone = 🌍 Откуда вы: { $timezone }
+profile_timezone = 🌍 Ваше время (UTC): { $timezone }
 
 profile_not_set = Не указано ❌
 
@@ -38,7 +38,7 @@ prompt_city = ✍️ Введите город рождения:
 prompt_birthday = 📅 Выберите вашу дату рождения:
 prompt_time = 🕒 Введите время рождения (в формате ЧЧ:ММ, например 14:30):
 prompt_coords = 📍 Введите широту и долготу через пробел или запятую (например: 55.75 37.61):
-prompt_timezone = 🌍 Введите ваш часовой пояс текстом (строго в формате Region/City, например Europe/Moscow):
+prompt_timezone = 🌍 Выберите ваш часовой пояс относительно UTC:
 prompt_gender = 🚻 Выберите ваш пол:
 gender_male = Мужской
 gender_female = Женский

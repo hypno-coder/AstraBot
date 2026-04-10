@@ -43,9 +43,12 @@ async def save_coords(message: Message, message_input: MessageInput, dialog_mana
     except ValueError:
         await message.answer(i18n.error_coords_format())
 
-async def save_timezone(message: Message, message_input: MessageInput, dialog_manager: DialogManager):
-    db: AsyncSession = dialog_manager.middleware_data["db"]
-    await db.execute(update(User).where(User.id == message.from_user.id).values(timezone=message.text.strip()))
+async def on_timezone_selected(callback: CallbackQuery, widget: Any, dialog_manager: DialogManager, item_id: str):
+    from .getters import TIMEZONE_MAPPING
+    iana_tz = TIMEZONE_MAPPING.get(item_id)
+    if iana_tz:
+        db: AsyncSession = dialog_manager.middleware_data["db"]
+        await db.execute(update(User).where(User.id == callback.from_user.id).values(timezone=iana_tz))
     await dialog_manager.switch_to(Profile.view)
 
 async def on_gender_selected(callback: CallbackQuery, widget: Any, dialog_manager: DialogManager, item_id: str):
