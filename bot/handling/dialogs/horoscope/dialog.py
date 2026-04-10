@@ -9,8 +9,8 @@ from aiogram_dialog.widgets.text import Format
 from bot.handling.states.horoscope import HoroscopeGroup
 from .getters import get_horoscope_data, get_compatibility_result
 from .handlers import (
-    on_dob_selected, on_period_selected,
-    on_partner_gender_selected, on_partner_zodiac_selected
+    on_dob_selected, on_period_selected, on_compat_clicked,
+    on_own_gender_selected, on_partner_zodiac_selected
 )
 
 dialog = Dialog(
@@ -35,21 +35,27 @@ dialog = Dialog(
                 on_click=on_period_selected,
             ),
         ),
-        Button(Format("{horo_compat_btt}"), id="go_compat", on_click=lambda c, w, m: m.switch_to(HoroscopeGroup.compatibility_gender)),
+        Button(Format("{horo_compat_btt}"), id="go_compat", on_click=on_compat_clicked),
         Cancel(Format("{btn_back}")),
         state=HoroscopeGroup.view,
         getter=get_horoscope_data,
     ),
 
-    # ── Window 3: Compatibility – partner gender ─────────────────────────────
+    # ── Window 3: Ask USER's own gender (only if not set in profile) ─────────
     Window(
-        Format("{horo_compat_gender}"),
+        Format("{horo_ask_own_gender}"),
         Row(
-            Button(Format("{horo_compat_male}"),   id="g_male",   on_click=lambda c, w, m: on_partner_gender_selected(c, w, m, "male")),
-            Button(Format("{horo_compat_female}"), id="g_female", on_click=lambda c, w, m: on_partner_gender_selected(c, w, m, "female")),
+            Button(
+                Format("{horo_compat_male}"), id="og_male",
+                on_click=lambda c, w, m: on_own_gender_selected(c, w, m, "male")
+            ),
+            Button(
+                Format("{horo_compat_female}"), id="og_female",
+                on_click=lambda c, w, m: on_own_gender_selected(c, w, m, "female")
+            ),
         ),
         Back(Format("{btn_back}")),
-        state=HoroscopeGroup.compatibility_gender,
+        state=HoroscopeGroup.ask_own_gender,
         getter=get_horoscope_data,
     ),
 

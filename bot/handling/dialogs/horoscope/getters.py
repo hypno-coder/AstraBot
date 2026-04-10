@@ -55,7 +55,7 @@ async def get_horoscope_data(dialog_manager: DialogManager, **kwargs):
         "horo_ask_dob": i18n.horo_ask_dob(),
         "horo_select_period": i18n.horo_select_period(),
         "horo_compat_btt": i18n.horo_compat_btt(),
-        "horo_compat_gender": i18n.horo_compat_gender(),
+        "horo_ask_own_gender": i18n.horo_ask_own_gender(),
         "horo_compat_male": i18n.horo_compat_male(),
         "horo_compat_female": i18n.horo_compat_female(),
         "horo_compat_zodiac": i18n.horo_compat_zodiac(),
@@ -75,14 +75,15 @@ async def get_compatibility_result(dialog_manager: DialogManager, **kwargs):
     user = await db.scalar(select(User).where(User.id == dialog_manager.event.from_user.id))
     user_zodiac = user.zodiac_sign if user else "aries"
 
-    partner_gender = dialog_manager.dialog_data.get("partner_gender", "male")
+    # user_gender is stored in dialog_data after they chose it or from their profile
+    user_gender = dialog_manager.dialog_data.get("user_gender", "male")
     partner_zodiac = dialog_manager.dialog_data.get("partner_zodiac", "aries")
 
-    # Convention: female is user if user is female, else partner is female
-    if partner_gender == "female":
-        female_z, male_z = partner_zodiac, user_zodiac
-    else:
+    # Mail.ru key always: female_zodiac_male_zodiac
+    if user_gender == "female":
         female_z, male_z = user_zodiac, partner_zodiac
+    else:
+        female_z, male_z = partner_zodiac, user_zodiac
 
     result = await get_compare(female_z, male_z, client=client, redis=redis, fallback=i18n.horo_error())
 

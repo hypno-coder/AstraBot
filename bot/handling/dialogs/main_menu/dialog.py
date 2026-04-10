@@ -17,9 +17,6 @@ async def on_horoscope(callback: CallbackQuery, button: Button, dialog_manager: 
     await dialog_manager.start(start_state, mode=StartMode.NORMAL)
 
 
-async def on_compatibility(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
-    await callback.answer("Вы выбрали 'Совместимость'")
-
 
 async def on_sonnik(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
     await callback.answer("Вы выбрали 'Сонник'")
@@ -34,7 +31,6 @@ menu_window = Window(
     Start(Format("{admin_btt}"), id="go_admin", state=AdminGroup.view, when="is_admin"),
     Start(Format("{profile_btt}"), id="go_profile", state=Profile.view),
     Button(Format("{horoscope_btt}"), id="horoscope", on_click=on_horoscope),
-    Button(Format("{compatibility_btt}"), id="compatibility", on_click=on_compatibility),
     Button(Format("{sonnik_btt}"), id="sonnik", on_click=on_sonnik),
     Button(Format("{premium_features_btt}"), id="premium", on_click=on_premium),
     state=Main_menu.start,
