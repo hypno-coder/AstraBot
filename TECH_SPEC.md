@@ -27,7 +27,10 @@ Stores profile data, split into automated and manual collection phases.
     * `fio`: String (Full Name).
     * `gender`: Enum (MALE, FEMALE, UNKNOWN).
     * `birth_city`: String.
-    * `birthday`: Date.    * `birth_time`: Time    * `birth_lat`: Float    * `birth_lon`: Float
+    * `birthday`: Date.    
+    * `birth_time`: Time    
+    * `birth_lat`: Float    
+    * `birth_lon`: Float
     * `timezone`: String (e.g., "Europe/Moscow").
 ####  0.2.2. Product Entity (The Catalog)
 Represents esoteric services available for purchase.

@@ -4,6 +4,8 @@ from typing import Awaitable, Callable
 import orjson
 import structlog
 from aiogram import Bot, Dispatcher
+from aiogram.enums import ParseMode
+from aiogram.client.default import DefaultBotProperties
 from aiogram.client.session.aiohttp import AiohttpSession
 from fluentogram import TranslatorHub
 
@@ -23,6 +25,7 @@ def bot_factory(config: BotConfig) -> Bot:
             json_dumps=lambda data: orjson.dumps(data).decode(),
             json_loads=orjson.loads,
         ),
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     )
 
 

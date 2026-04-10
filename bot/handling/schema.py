@@ -4,7 +4,7 @@ import structlog
 from aiogram import Dispatcher
 from aiogram_dialog import StartMode, setup_dialogs
 
-from bot.handling.dialogs import main_dialog
+from bot.handling.dialogs import main_dialog, profile_dialog
 from bot.handling.filters import ChatType, ChatTypeFilter
 from bot.handling.handlers import get_user_router, start_router, sub_router
 from bot.handling.middlewares import (DatabaseMiddleware,
@@ -43,6 +43,7 @@ async def assemble(
 
     # Роутеры
     dp.include_router(main_dialog)
+    dp.include_router(profile_dialog)
     dp.include_router(get_user_router)
     dp.include_router(start_router)
     dp.include_router(sub_router)

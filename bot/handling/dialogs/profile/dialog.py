@@ -1,0 +1,100 @@
+import operator
+
+from aiogram_dialog import Dialog, Window
+from aiogram_dialog.widgets.kbd import Button, Row, Group, SwitchTo, Select, Calendar, Cancel
+from aiogram_dialog.widgets.text import Const, Format
+from aiogram_dialog.widgets.input import MessageInput
+
+from bot.handling.states.profile import Profile
+from bot.handling.states.main_menu import Main_menu
+from .getters import get_profile_data
+from .handlers import (
+    save_fio, save_city, save_time, save_coords, save_timezone, 
+    on_gender_selected, on_date_selected
+)
+
+dialog = Dialog(
+    Window(
+        Format("{profile_title}\n"),
+        Format("{profile_fio}"),
+        Format("{profile_gender}"),
+        Format("{profile_city}"),
+        Format("{profile_birthday}"),
+        Format("{profile_time}"),
+        Format("{profile_coords}"),
+        Format("{profile_timezone}\n"),
+        Group(
+            Row(
+                SwitchTo(Format("{btn_edit_fio}"), id="set_fio", state=Profile.edit_fio),
+                SwitchTo(Format("{btn_edit_gender}"), id="set_gender", state=Profile.edit_gender),
+            ),
+            Row(
+                SwitchTo(Format("{btn_edit_city}"), id="set_city", state=Profile.edit_birth_city),
+                SwitchTo(Format("{btn_edit_birthday}"), id="set_bd", state=Profile.edit_birthday),
+            ),
+            Row(
+                SwitchTo(Format("{btn_edit_time}"), id="set_time", state=Profile.edit_birth_time),
+                SwitchTo(Format("{btn_edit_coords}"), id="set_coords", state=Profile.edit_coords),
+            ),
+            SwitchTo(Format("{btn_edit_timezone}"), id="set_tz", state=Profile.edit_timezone),
+        ),
+        Cancel(Format("{btn_back}")),
+        state=Profile.view,
+        getter=get_profile_data
+    ),
+    Window(
+        Format("{prompt_fio}"),
+        MessageInput(save_fio),
+        SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
+        state=Profile.edit_fio,
+        getter=get_profile_data
+    ),
+    Window(
+        Format("{prompt_gender}"),
+        Select(
+            Format("{item[1]}"),
+            id="s_gender",
+            item_id_getter=operator.itemgetter(0),
+            items="genders",
+            on_click=on_gender_selected
+        ),
+        SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
+        state=Profile.edit_gender,
+        getter=get_profile_data
+    ),
+    Window(
+        Format("{prompt_city}"),
+        MessageInput(save_city),
+        SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
+        state=Profile.edit_birth_city,
+        getter=get_profile_data
+    ),
+    Window(
+        Format("{prompt_birthday}"),
+        Calendar(id="calendar", on_click=on_date_selected),
+        SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
+        state=Profile.edit_birthday,
+        getter=get_profile_data
+    ),
+    Window(
+        Format("{prompt_time}"),
+        MessageInput(save_time),
+        SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
+        state=Profile.edit_birth_time,
+        getter=get_profile_data
+    ),
+    Window(
+        Format("{prompt_coords}"),
+        MessageInput(save_coords),
+        SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
+        state=Profile.edit_coords,
+        getter=get_profile_data
+    ),
+    Window(
+        Format("{prompt_timezone}"),
+        MessageInput(save_timezone),
+        SwitchTo(Format("{btn_back}"), id="back", state=Profile.view),
+        state=Profile.edit_timezone,
+        getter=get_profile_data
+    )
+)
