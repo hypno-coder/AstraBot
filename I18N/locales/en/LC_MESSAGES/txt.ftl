@@ -3,6 +3,52 @@ enter_watermark = "Type watermark text"
 in_progress = "Photo in progress"
 db_get_user = User {$user}
 
+#Buttons
+horoscope_btt = "Horoscope"
+compatibility_btt = "Compatibility"
+sonnik_btt = "Dream book"
+premium_features_btt = "Premium features"
+
+# Profile UI
+profile_btt = "👤 My profile"
+profile_title = <b>👤 Your profile:</b>
+
+profile_fio = 👤 Full Name: { $fio }
+profile_gender = 🚻 Gender: { $gender }
+profile_city = 🏙 Place of birth: { $birth_city }
+profile_birthday = 📅 Date of birth: { $birthday }
+profile_time = 🕒 Time of birth: { $birth_time }
+profile_timezone = 🌍 Your time (UTC): { $timezone }
+
+profile_not_set = Not set ❌
+
+btn_edit_fio = ✏️ Full Name
+btn_edit_gender = ✏️ Gender
+btn_edit_city = ✏️ Place of birth
+btn_edit_birthday = ✏️ Date of birth
+btn_edit_time = ✏️ Time of birth
+btn_edit_timezone = ✏️ Timezone
+btn_back = 🔙 Back
+
+# Profile Prompts
+prompt_fio = ✍️ Enter your full name:
+prompt_city = ✍️ Enter your city of birth:
+prompt_birthday = 📅 Select your date of birth:
+prompt_time = 🕒 Enter time of birth (in HH:MM format, e.g. 14:30):
+prompt_timezone = 🌍 Choose your timezone relative to UTC:
+prompt_gender = 🚻 Select your gender:
+gender_male = Male
+gender_female = Female
+gender_unknown = Unspecified
+error_time_format = ❌ Invalid time format! Use HH:MM format (e.g. 14:30).
+
+# Geocoding Confirmation
+confirm_city_prompt = 📍 Is this your city?
+    <b>{ $address }</b>
+btn_yes_city = ✅ Yes, correct
+btn_no_city = ❌ No, enter again
+error_city_not_found = ❌ We couldn't find this city. Please try again or enter a larger nearby city.
+
 # Admin Panel
 
 admin_btt = 🔐 Admin Panel
